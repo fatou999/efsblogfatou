@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from yahoo_finance import Share
 
 class Customer(models.Model):
     name = models.CharField(max_length=50)
@@ -59,6 +60,18 @@ class Stock(models.Model):
     purchase_price = models.DecimalField(max_digits=10, decimal_places=2)
     purchase_date = models.DateField(default=timezone.now, blank=True, null=True)
 
+    def current_stock_price(self):
+        symbol_f = self.symbol
+        data = Share(symbol_f)
+        share_value = (data.get_open())
+        return share_value
+
+    def current_stock_value(self):
+        symbol_f = self.symbol
+        data = Share(symbol_f)
+        share_value = (data.get_open())
+        return float(share_value) * float(self.shares)
+
     def created(self):
         self.recent_date = timezone.now()
         self.save()
@@ -67,4 +80,36 @@ class Stock(models.Model):
         return str(self.customer)
 
     def initial_stock_value(self):
+        return self.shares * self.purchase_price
+
+
+
+class Mutualfund(models.Model):
+    customer = models.ForeignKey(Customer, related_name='mutualfunds')
+    symbol = models.CharField(max_length=10)
+    name = models.CharField(max_length=50)
+    shares = models.DecimalField (max_digits=10, decimal_places=1)
+    purchase_price = models.DecimalField(max_digits=10, decimal_places=2)
+    purchase_date = models.DateField(default=timezone.now, blank=True, null=True)
+
+    def current_mutualfund_price(self):
+        symbol_f = self.symbol
+        data = Share(symbol_f)
+        share_value = (data.get_open())
+        return share_value
+
+    def current_mutualfund_value(self):
+        symbol_f = self.symbol
+        data = Share(symbol_f)
+        share_value = (data.get_open())
+        return float(share_value) * float(self.shares)
+
+    def created(self):
+        self.recent_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return str(self.customer)
+
+    def initial_mutualfund_value(self):
         return self.shares * self.purchase_price

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
         .navbar {
@@ -59,6 +60,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
             </button>
 
             <!-- Branding Image -->
@@ -72,6 +74,7 @@
                 <li><a href="{% url 'portfolio:customer_list' %}">Customers</a></li>
                 <li><a href="{% url 'portfolio:investment_list' %}">Investments</a></li>
                 <li><a href="{% url 'portfolio:stock_list' %}">Stocks</a></li>
+                <li><a href="{% url 'portfolio:mutualfund_list' %}">Mutualfunds</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
@@ -123,9 +126,23 @@
                                     <p><a class="btn btn-default" href="{% url 'portfolio:investment_list' %}"
                                           role="button">View
                                         details &raquo;</a></p>
+
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="thumbnail">
+                                <img src="{% static "images/mutualfunds.jpg" %}" alt="mutualfunds"/>
+                                <div class="caption">
+                                    <h2>Mutual Funds</h2>
+                                    <p>Our team also provides advises for Mutual Funds.</p>
+                                    <p><a class="btn btn-default" href="{% url 'portfolio:mutualfund_list' %}"
+                                          role="button">View
+                                        details &raquo;</a></p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-md-3">
                             <div class="thumbnail">
                                 <img src="{% static "images/stocks.jpg" %}" alt="stocks"/>
